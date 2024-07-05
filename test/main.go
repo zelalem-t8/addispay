@@ -3,16 +3,24 @@ package main
 import (
 	"fmt"
 
-	"github.com/zelalem-t8/addispay"
+	"github.com/zelalem-t8/addispay" // Import your SDK package
 )
 
 func main() {
-	addisPay := addispay.New("your_base64_public_key", "your_base64_private_key", "your_auth_token")
+	// Initialize AddisPay instance
+	publicKey := "your-public-key"
+	privateKey := "your-private-key"
+	auth := "your-auth-token"
+	ap := addispay.New(publicKey, privateKey, auth)
 
-	response, err := addisPay.sendRequest("1000", "12345", "ETB", "John", "john@example.com", "0912345678", "Doe", "30", "unique_nonce", "https://your.notify.url", "https://your.return.url", "Test transaction")
+	// Example call to SendRequest
+	resp, err := ap.SendRequest("100.0", "tx123", "USD", "John", "john@example.com", "123456789", "Doe", "30", "nonce123", "https://example.com/notify", "https://example.com/return", "Test message")
 	if err != nil {
-		fmt.Println("Error:", err)
-	} else {
-		fmt.Println("Response:", response.Status)
+		fmt.Println("Error sending request:", err)
+		return
 	}
+
+	defer resp.Body.Close()
+	fmt.Println("Response Status:", resp.Status)
+	// Handle response data as needed
 }

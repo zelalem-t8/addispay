@@ -80,7 +80,8 @@ func (ap *AddisPay) decryptData(encryptedData string) (string, error) {
 	return string(decryptedBytes), nil
 }
 
-func (ap *AddisPay) sendRequest(totalAmount, txRef, currency, firstName, email, phoneNumber, lastName, sessionExpirationMinute, nonce, notifyURL, returnURL, message string) (*http.Response, error) {
+// SendRequest sends a request to AddisPay API
+func (ap *AddisPay) SendRequest(totalAmount, txRef, currency, firstName, email, phoneNumber, lastName, sessionExpirationMinute, nonce, notifyURL, returnURL, message string) (*http.Response, error) {
 	data := map[string]interface{}{
 		"data": map[string]string{
 			"total_amount":    ap.encryptData(totalAmount),
